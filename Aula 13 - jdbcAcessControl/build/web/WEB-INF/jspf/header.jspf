@@ -23,12 +23,20 @@
     }
 %>
 <h1>MyTasks</h1>
+<h1>MyTasks</h1>
 <%if (CreateListener.exception!=null){%>
 <div style="color:red">
     <%=CreateListener.exception.getMessage()%>
 </div>
 <hr/>
 <%}%>
+<%if (requestException !=null){%>
+<div style="color:red">
+    <%=CreateListener.exception.getMessage()%>
+</div>
+<hr/>
+<%}%>
+
 <form method="post">
     Nome:
     <input type="text" name="username"/>
