@@ -1,0 +1,25 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="db.CreateListener"%>
+<%@ page pageEncoding="UTF-8" %>
+<h1>MyTasks</h1>
+<%if (CreateListener.exception!=null){%>
+<div style="color:red">
+    <%=CreateListener.exception.getMessage()%>
+</div>
+<hr/>
+<%}%>
+<form method="post">
+    Nome:
+    <input type="text" name="username"/>
+    <br>
+    Senha:
+    <input type="password" name="senha"/>
+    <input type="submit" name="login" value="Entrar"/>
+</form>
+<form method="post">
+    Bem-Vindo!
+    <input type="submit" name="logout" value="Sair"/> 
+    
+</form>
+
+<hr>
