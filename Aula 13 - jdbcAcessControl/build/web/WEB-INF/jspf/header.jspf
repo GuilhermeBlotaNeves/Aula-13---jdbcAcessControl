@@ -1,6 +1,27 @@
 <%-- any content can be specified here e.g.: --%>
 <%@page import="db.CreateListener"%>
 <%@ page pageEncoding="UTF-8" %>
+<%
+    Exception requestException;
+    if(request.getParameter("login")!=null){
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        try{
+            User user = User.getUsers(username, password);
+            if(user == null){
+                requestException = 
+                        new Exception("Usuario não encontrado ou senha invalida");
+            }else {
+                session.setAttribute("user", user);
+                
+            }
+        }catch(Exception ex){
+            requestException = ex;
+        }
+    }else if (request.getParameter("logout")!=null){
+        session.removeAttribute("user");
+    }
+%>
 <h1>MyTasks</h1>
 <%if (CreateListener.exception!=null){%>
 <div style="color:red">
