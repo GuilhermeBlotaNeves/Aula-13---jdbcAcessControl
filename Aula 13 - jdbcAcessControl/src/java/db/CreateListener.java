@@ -32,6 +32,9 @@ public class CreateListener implements ServletContextListener {
                     + " name varchar not null              )");
             stmt.execute("insert OR IGNORE into users values "
                     + "('admin',20761617,'Administrador')");
+            
+            stmt.execute("insert OR IGNORE into users values "
+                    + "('fulano',-1196589617,'Fulano Da Silva')");
             con.close();
         } catch (Exception ex) {
             exception = ex;
