@@ -1,0 +1,56 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="model.User"%>
+<%@page import="db.CreateListener"%>
+<%@ page pageEncoding="UTF-8" %>
+<%
+    Exception requestException = null;
+    if(request.getParameter("login")!=null){
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        try{
+            User user = User.getUser(username, password);
+            if(user == null){
+                requestException = 
+                new Exception("Usuário não encontrado ou senha inválida");
+            }else{
+                session.setAttribute("user", user);
+                response.sendRedirect(request.getRequestURI());
+            }
+        }catch(Exception ex){
+            requestException = ex;
+        }
+    }else if(request.getParameter("logout")!=null){
+        session.removeAttribute("user");
+        response.sendRedirect(request.getRequestURI());
+    }
+%>
+<h1>MyTasks</h1>
+<%if(CreateListener.exception != null){%>
+    <div style="color: red">
+        <%= CreateListener.exception.getMessage() %>
+    </div>
+    <hr/>
+<%}%>
+<%if(requestException != null){%>
+    <div style="color: red">
+        <%= requestException.getMessage() %>
+    </div>
+    <hr/>
+<%}%>
+<%if(session.getAttribute("user")==null){%>
+    <form method="post">
+        Username:
+        <input type="text" name="username"/>
+        Senha:
+        <input type="password" name="password"/>
+        <input type="submit" name="login" value="Entrar"/>
+    </form>
+<%}else{%>
+    <form method="post">
+        <a href="index.jsp">INDEX</a> |
+        <a href="users.jsp">USERS</a> |
+        Bem vindo, <%= ((User)session.getAttribute("user")).getName() %>
+        <input type="submit" name="logout" value="Sair"/>
+    </form>
+<%}%>
+<hr/>
